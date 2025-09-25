@@ -60,6 +60,9 @@ class TestLeafNode(unittest.TestCase):
         self.assertEqual(repr(node1),
             "LeafNode(a, youtube, cannot have children, {'href': 'https://www.youtube.com', 'target': '_blank'})")
 
+    def test_none_text_raises(self):
+        with self.assertRaises(ValueError):
+            LeafNode("a",None)
     
     def test_leaf_to_html_one_prop(self):
         node = LeafNode("a", "Click me!",None ,props ={"href": "https://www.google.com"}).to_html()
