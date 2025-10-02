@@ -1,14 +1,9 @@
 from textnode import *
-
+from filemover import copy_fs
 
 
 print("hello world")
 def main():
-    first_node = TextNode(
-        "test string",
-        TextType.LINKS,
-        "https://www.youtube.come"
-    )
-    print(f"variable {first_node} created")
+    copy_fs("./static", "./public")
 
 main()
