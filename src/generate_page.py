@@ -35,3 +35,5 @@ def generate_page(from_path, template_path, dest_path):
             f.write(final_html)
     except OSError as e:
         raise ValueError(f"Cannot write to destination path '{dest_path}': {e}")
+    
+    
