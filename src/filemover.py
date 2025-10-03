@@ -20,7 +20,7 @@ def recursive_copy(curr_dir, tar_dir):
 
 def purge_directory(tar_dir):
     if os.path.exists(tar_dir):
-        print("Deleting public directory...")
+        print(f"Deleting {tar_dir} directory...no children will be spared.")
         shutil.rmtree(tar_dir)
     os.mkdir(tar_dir)
 

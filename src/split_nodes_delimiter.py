@@ -16,6 +16,7 @@ def split_single_node(text, delimiter):
     DELIMITER_MAP = {
         "**": TextType.BOLD,
         "*" : TextType.ITALIC,
+        "_" : TextType.ITALIC,
         "`" : TextType.CODE
     }
     if delimiter not in DELIMITER_MAP:
