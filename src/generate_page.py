@@ -2,7 +2,7 @@ import os
 from extract_title import extract_title
 from markdown_blocks import markdown_to_html_node
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     # validate src and dest paths
@@ -20,7 +20,12 @@ def generate_page(from_path, template_path, dest_path):
     content = markdown_to_html_node(markdown_content).to_html()
     title = extract_title(markdown_content)
 
-    final_html  = template_content.replace("{{ Title }}", title).replace("{{ Content }}", content)
+    final_html  = (template_content
+                   .replace("{{ Title }}", title)
+                   .replace("{{ Content }}", content)
+                   .replace('href="/',f'href="{basepath}' )
+                   .replace('src="/',f'src="{basepath}')
+    )
 
     try:
         # check if directory is valid/acceptable
@@ -36,7 +41,7 @@ def generate_page(from_path, template_path, dest_path):
     except OSError as e:
         raise ValueError(f"Cannot write to destination path '{dest_path}': {e}")
     
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     all_entries = os.listdir(dir_path_content)
 
     for entry in all_entries:
@@ -46,6 +51,6 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         if os.path.isfile( source_path ):
             if source_path.endswith(".md"):
                 dest_path = dest_path.replace(".md", ".html")
-                generate_page(source_path, template_path, dest_path)
+                generate_page(source_path, template_path, dest_path, basepath)
         elif os.path.isdir(source_path):
-            generate_pages_recursive(source_path, template_path, dest_path)
+            generate_pages_recursive(source_path, template_path, dest_path, basepath)
